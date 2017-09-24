@@ -11,13 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921180610) do
+ActiveRecord::Schema.define(version: 20170921192529) do
 
   create_table "categories", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "categorizations", force: true do |t|
+    t.string   "post_id",     null: false
+    t.string   "category_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "categorizations", ["post_id", "category_id"], name: "index_categorizations_on_post_id_and_category_id", unique: true
 
   create_table "comments", force: true do |t|
     t.text     "body",       null: false

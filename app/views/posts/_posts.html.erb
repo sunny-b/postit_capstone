@@ -1,0 +1,7 @@
+<% if posts.any? %>
+  <% posts.each do |post| %>
+    <%= render 'posts/post', post: post %>
+  <% end %>
+<% else %>
+  <h3>No Posts</h3>
+<% end %>
