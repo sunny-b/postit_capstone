@@ -8,4 +8,8 @@ module ApplicationHelper
   def datetime(dt)
     dt.strftime("%b %d, %Y %I:%M %p %Z")
   end
+
+  def same_user?(post)
+    current_user == post.creator
+  end
 end

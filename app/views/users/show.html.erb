@@ -1,0 +1,32 @@
+<h3>Profile: <%= @user.username %></h3>
+
+<hr>
+
+<div class="well">
+  <dl class="dl-horizontal">
+    <dt>Username:</dt>
+    <dd><%= @user.username %></dd>
+  </dl>
+</div>
+
+<br>
+
+
+<h5><%= @user.username %>'s Activity</h5>
+
+<ul class="nav nav-tabs">
+  <li class="<%= 'active' unless params[:tab] == 'comments' %>">
+    <%= link_to "Posts (#{@posts.size})", user_path(@user) %>
+  </li>
+  <li class="<%= 'active' if params[:tab] == 'comments' %>">
+    <%= link_to "Comments (#{@comments.size})", user_path(@user, tab: 'comments') %>
+  </li>
+</ul>
+
+<div class="row">
+  <% if params[:tab].nil? %>
+    <%= render 'posts/posts', posts: @posts %>
+  <% else %>
+    <%= render 'comments/comments', comments: @comments, show_post: true %>
+  <% end %>
+</div>

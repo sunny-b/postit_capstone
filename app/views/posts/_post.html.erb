@@ -6,7 +6,9 @@
     <p><i>Created by:</i> <%= post.creator.username %> on <%= datetime(post.created_at) %></p>
   </span>
   <br />
-  <%= link_to 'Edit', edit_post_path(post) %>
-  <br />
+  <% if logged_in? && same_user?(post) %>
+    <%= link_to 'Edit', edit_post_path(post) %>
+    <br />
+  <% end %>
   <%= link_to 'Comments', post_path(post) %>
 </div>

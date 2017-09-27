@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :edit]
+  before_action :require_user, only: [:new, :create]
+  before_action :require_same_user, only: [:update, :edit]
 
   def index
     @posts = Post.all
@@ -11,7 +13,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.creator = User.first
+    @post.creator = current_user
 
     if @post.save
       flash[:notice] = "New post successfully created!"
@@ -38,6 +40,13 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def require_same_user
+    unless logged_in? && params[:id] == current_user.id
+      flash[:error] = 'No Bueno!'
+      redirect_to root_path
+    end
+  end
 
   def post_params
     params.require(:post).permit!

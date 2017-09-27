@@ -1,6 +1,9 @@
-<p>
-  [<%= link_to 'Edit Post', edit_post_path(@post) %>]
-</p>
+<% if logged_in? && same_user?(@post) %>
+  <p>
+    [<%= link_to 'Edit Post', edit_post_path(@post) %>]
+  </p>
+<% end %>
+
 <h3><%= @post.title %></h3>
 
 <hr>
@@ -8,27 +11,24 @@
 
 <br><br>
 
-<%= render 'shared/errors', item: @comment %>
+<% if logged_in? %>
 
-<div>
-  <h5>New Comment</h5>
-  <%= form_for [@post, @comment] do |f| %>
-    <%= f.label :body, 'Message' %>
-    <%= f.text_area :body %>
-    <br />
-    <%= f.submit %>
-  <% end %>
-</div>
+  <%= render 'shared/errors', item: @comment %>
 
-<br>
+  <div>
+    <h5>New Comment</h5>
+    <%= form_for [@post, @comment] do |f| %>
+      <%= f.label :body, 'Message' %>
+      <%= f.text_area :body %>
+      <br />
+      <%= f.submit %>
+    <% end %>
+  </div>
+
+  <br>
+
+<% end %>
 
 <h4>Comments:</h4>
 
-<% @post.comments.each do |comment| %>
-  <div class="span8 well">
-    <p><%= comment.body %></p>
-    <span>
-      <p><i>Created by:</i> <%= comment.creator.username %> at <%= comment.created_at %></p>
-    </span>
-  </div>
-<% end %>
+<%= render 'comments/comments', comments: @post.comments %>

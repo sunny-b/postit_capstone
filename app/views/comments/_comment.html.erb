@@ -1,0 +1,10 @@
+<div class="span8 well">
+  <p><em>"<%= comment.body %>"</em> on
+    <% if show_post %>
+      <%= link_to comment.post.title, post_path(comment.post) %>
+    <% end %>
+  </p>
+  <span>
+    <p><i>Created by:</i> <%= comment.creator.username %> at <%= comment.created_at %></p>
+  </span>
+</div>
